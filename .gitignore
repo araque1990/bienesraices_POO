@@ -1,0 +1,21 @@
+# Dependencias de PHP y Node
+/vendor/
+/node_modules/
+
+# Configuración sensible (Credenciales)
+.env
+
+# Archivos compilados o temporales de Gulp/SASS
+/build/
+.sass-cache/
+
+# Carpetas de recursos generados (opcional pero recomendado)
+# Si las imágenes son de prueba, no las subas.
+/imagenes/
+
+# Archivos del Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Docker logs o temporales
+.docker/

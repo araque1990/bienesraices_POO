@@ -1,0 +1,30 @@
+# Usamos una versión moderna y ligera de PHP-FPM
+FROM php:8.2-fpm-alpine
+
+# 1. Instalar dependencias del sistema (Linux)
+# Necesarias para compilar GD (imágenes) y Zip (para Composer)
+RUN apk add --no-cache \
+    git \
+    curl \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    libzip-dev \
+    zip \
+    unzip
+
+# 2. Configurar la extensión GD
+# Le decimos a PHP que incluya soporte para FreeType (fuentes) y JPEG
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+
+# 3. Instalar las extensiones de PHP
+# - gd: Para Intervention Image
+# - pdo_mysql & mysqli: Para la base de datos
+# - zip: Para que Composer descomprima paquetes rápido
+RUN docker-php-ext-install -j$(nproc) gd pdo_mysql mysqli zip
+
+# 4. Instalar Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Establecer el directorio de trabajo
+WORKDIR /var/www/html
