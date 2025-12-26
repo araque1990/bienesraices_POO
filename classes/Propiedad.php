@@ -58,4 +58,11 @@ class Propiedad extends ActiveRecord
 
         return self::$errores;
     }
+
+    public function guardar()
+    {
+        $this->creado = date('Y-m-d');
+
+        return parent::guardar();
+    }
 }
